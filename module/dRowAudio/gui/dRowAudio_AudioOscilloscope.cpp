@@ -42,7 +42,7 @@ AudioOscilloscope::AudioOscilloscope() :
     verticalZoomFactor (1.0f),
     horizontalZoomFactor (1.0f),
     backgroundColour (Colours::black),
-    traceColour (Colours::green)
+    traceColour (Colours::lightgreen)
 {
     circularBufferMax.calloc (bufferSize);
     circularBufferMin.calloc (bufferSize);
@@ -50,7 +50,7 @@ AudioOscilloscope::AudioOscilloscope() :
 
     setOpaque (true);
     resized(); //Initialises the image
-    startTimerHz (50);
+    startTimerHz (60);
 }
 
 //==============================================================================
@@ -91,7 +91,7 @@ void AudioOscilloscope::timerCallback()
     const int width = getWidth();
     const float halfHeight = getHeight() * 0.5f;
 
-    const int numPixelsToDraw = bufferPos - lastBufferPos;
+    const int numPixelsToDraw = std::abs(bufferPos - lastBufferPos);
     const int newSectionStart = width - numPixelsToDraw;
 
     // shuffle image along
@@ -124,7 +124,9 @@ void AudioOscilloscope::timerCallback()
         bufferLastMin = min;
 
         g.drawLine ((float) x, halfHeight + (halfHeight * verticalZoomFactor * max),
-                    (float) x, halfHeight + (halfHeight * verticalZoomFactor * min));
+                    (float) x, halfHeight + (halfHeight * verticalZoomFactor * min),
+                    2.5f //lineThickness
+                    );
     }
 
     lastBufferPos = bufferPos;
