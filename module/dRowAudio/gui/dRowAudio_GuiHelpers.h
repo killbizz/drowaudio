@@ -176,7 +176,7 @@ namespace GuiHelpers
         CustomTypeface customTypeface;
         customTypeface.setCharacteristics (font.getTypefaceName(), font.getAscent(),
                                            font.isBold(), font.isItalic(), ' ');
-        customTypeface.addGlyphsFromOtherTypeface (*font.getTypefacePtr(), 0, maxNumChars);
+        customTypeface.addGlyphsFromOtherTypeface (*font.getTypeface(), 0, maxNumChars);
 
         return customTypeface.writeToStream (*outFileStream);
     }
